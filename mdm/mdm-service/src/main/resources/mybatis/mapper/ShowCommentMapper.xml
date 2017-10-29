@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
+<mapper namespace="com.bocsoft.bocop.mdm.mapper.ShowCommentMapper">
+
+
+<resultMap id="CommentInfo" type="com.bocsoft.bocop.mdm.entity.CommentInfo"> 
+		<!-- 
+		<id column="id" property="id"/> -->
+        <result column="comment_id" property="commentId" />
+        <result column="content" property="content" />
+        <result column="loc_longitude" property="longitude" />
+        <result column="loc_latitude" property="latitude" />
+        <result column="praise_num" property="praiseNum" />
+ 		<result column="commit_date" property="commitDate" />
+   
+    </resultMap>
+    
+    <select id="showComment" parameterType="com.bocsoft.bocop.mdm.entity.CommentInfo" resultMap="CommentInfo">
+ 
+ 			SELECT lib_reply.content, lib_reply.comment_id FROM lib_reply WHERE comment_id=#{commentId}
+ 	</select>
+ </mapper>
+ 

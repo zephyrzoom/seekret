@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" 
+	xmlns:cache="http://www.springframework.org/schema/cache"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context 
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/aop 
+        http://www.springframework.org/schema/aop/spring-aop.xsd
+        http://www.springframework.org/schema/mvc 
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd
+        http://www.springframework.org/schema/cache 
+        http://www.springframework.org/schema/cache/spring-cache.xsd">
+        
+    <aop:config proxy-target-class="true"></aop:config> 
+    
+	<mvc:annotation-driven />
+	
+    <!-- 处理对静态资源的请求 -->
+	<mvc:resources mapping="/resources/**" location="/resources/" />
+	<mvc:resources mapping="/WEB-INF/**" location="/WEB-INF/" />
+	<mvc:resources mapping="/static/**" location="/static/" />
+  
+	<!-- 处理中文乱码 -->
+	<mvc:annotation-driven>
+	     <mvc:message-converters register-defaults="true">
+		    <bean class="org.springframework.http.converter.StringHttpMessageConverter">
+		      <property name="supportedMediaTypes" value = "text/plain;charset=UTF-8" />
+		    </bean>
+	     </mvc:message-converters>
+     </mvc:annotation-driven>
+     
+	<!-- 只扫描@Controller注解 -->
+	<context:component-scan base-package="com.bocsoft.bocop.mdm" use-default-filters="false">
+		<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller" />
+		<context:include-filter type="annotation" expression="org.springframework.web.bind.annotation.ControllerAdvice" />
+	</context:component-scan>
+	
+ 	<bean id="viewResolver"
+		class="org.springframework.web.servlet.view.UrlBasedViewResolver">
+		<property name="viewClass"
+			value="org.springframework.web.servlet.view.JstlView" />
+		<property name="prefix" value="/jsp/" />
+		<property name="suffix" value=".jsp" />
+	</bean>
+
+	<!-- 处理json -->
+	<mvc:annotation-driven>
+		<mvc:message-converters>
+		   <bean class="org.springframework.http.converter.ResourceHttpMessageConverter"></bean>
+		   <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+	   		<property name="supportedMediaTypes">
+				<list>
+					<value>text/html;charset=UTF-8</value>
+					<value>application/json;charset=UTF-8</value>
+				</list>
+			</property>
+		   </bean>
+		</mvc:message-converters>
+	</mvc:annotation-driven>
+	
+</beans>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
+<mapper namespace="com.bocsoft.bocop.mdm.mapper.CommitCommentMapper">
+
+ 
+   <insert id="commit" useGeneratedKeys="true" keyProperty="commentId" parameterType="com.bocsoft.bocop.mdm.entity.qo.CommentQo">
+       <!--Date operationTime = new java.sql.Date(new java.util.Date().getTime());  --> 
+        insert into lib_comment(content,loc_longitude,loc_latitude,commit_date)
+        values
+        (#{content},#{longitude},#{latitude},#{commitDate}) 
+    </insert>     
+ 
+</mapper>

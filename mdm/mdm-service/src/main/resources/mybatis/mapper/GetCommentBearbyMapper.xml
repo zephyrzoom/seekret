@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
+<mapper namespace="com.bocsoft.bocop.mdm.mapper.GetCommentsNearbyMapper">
+
+   <resultMap id="CommentsResultMap" type="com.bocsoft.bocop.mdm.entity.CommentNearbyInfo">
+   	<result column="comment_id" property="commentId"/>
+   	<result column="content" property="content"/>
+   	<result column="loc_longitude" property="longitude"/>
+   	<result column="loc_latitude" property="latitude"/>
+    <result column="distance" property="distance"/>
+    <!-- <result column="reply" property="reply"/>    --> 
+    <result column="praise_num" property="praiseNum"/>
+    <result column="commit_date" property="commitDate"/>
+   </resultMap>
+   
+   <select id="getComments" parameterType="com.bocsoft.bocop.mdm.entity.qo.LocationQo" resultMap="CommentsResultMap">
+        select  comment_id, content, praise_num, commit_date,loc_longitude,loc_latitude,
+        	 acos((1-((1-cos(radians(loc_latitude)-radians(#{latitude})))/2+
+             cos(radians(#{latitude}))*cos(radians(loc_latitude))*
+             (1-cos(radians(loc_longitude)-radians(#{longitude})))/2)*2))*6378137 as distance
+        from lib_comment        
+        where abs(loc_longitude - #{longitude}) &lt; 0.06 or abs(loc_latitude - #{latitude}) &lt; 0.06
+    </select>     
+ 
+</mapper>

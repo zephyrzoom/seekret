@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
+<mapper namespace="com.bocsoft.bocop.mdm.mapper.OtherCommentMapper">
+
+ <insert id="otherComment" parameterType="com.bocsoft.bocop.mdm.entity.CommentInfo">
+ 
+ 	insert into lib_reply(content,comment_id) values(#{content},#{commentId}) 
+ </insert>
+       
+ 
+</mapper>
+
+
+ 
